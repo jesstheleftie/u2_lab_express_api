@@ -26,7 +26,18 @@ const getAllReviews = async (req, res) => {
   }
 };
 
+const findReviewDetailById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    let foundReview = await Review.findById(id);
+    res.json(foundReview);
+  } catch (error) {
+    res.send("Error finding Movie Detail");
+  }
+};
+
 module.exports = {
   getSortedReviewsByScore,
-  getAllReviews
+  getAllReviews,
+  findReviewDetailById
 };

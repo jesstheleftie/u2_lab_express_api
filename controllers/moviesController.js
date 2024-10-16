@@ -27,9 +27,18 @@ res.json(movies)
   }
 }
 
-
+const findMovieDetailById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    let foundMovie = await Movie.findById(id);
+    res.json(foundMovie);
+  } catch (error) {
+    res.send("Error finding Movie Detail");
+  }
+};
 
 module.exports = {
   getSortedMoviesByDate,
-  getAllMovie
+  getAllMovie,
+  findMovieDetailById
 };
