@@ -1,5 +1,5 @@
 
-
+const { Review } = require("../models");
 
 const getSortedReviewsByScore = async (req, res) => {
   try {
@@ -25,7 +25,6 @@ const getAllReviews = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
-
 
 module.exports = {
   getSortedReviewsByScore,
