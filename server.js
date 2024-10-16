@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const { Actor, Movie, Review } = require("./models");
-const {getSortedMoviesByDate} = require("./controllers/moviesController")
-const { getSortedReviewsByScore } = require("./controllers/reviewsController");
-const PORT = process.env.PORT || 3001;
+const  moviesController = require("./controllers/moviesController");
+const reviewsController = require("./controllers/reviewsController");
+const actorController = require("./controllers/actorController")
+
+const PORT = process.env.PORT || 3003;
 const db = require("./db");
 const actorSchema = require("./models/actor");
 const { findMovieDetailById } = require("./controllers/everythingController");
@@ -16,30 +18,20 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("This is root!");
 });
-//find movie detail by ID and throw error if nothing found
-app.get("/details/:id", findMovieDetailById)
-//index route for Actors
-app.get("/actors", async (req, res) => {
-  const actors = await Actor.find({});
-  res.json(actors);
-});
-//route for sorting movie by date released
-app.get("/movies/sort", getSortedMoviesByDate);
+//Movies Route
+app.get("/movies/sort", moviesController.getSortedMoviesByDate);
+app.get("/movies", moviesController.getAllMovie )
 
-//index route for Movies
-app.get("/movies", async (req, res) => {
-  const movies = await Movie.find({});
-  res.json(movies);
-});
+//Actors Route
+app.get("/actors", actorController.getAllActors)
 
-//route for sorting by review score
-app.get("/reviews/sort", getSortedReviewsByScore);
 
-//index route for Reviews
-app.get("/reviews", async (req, res) => {
-  const reviews = await Review.find({});
-  res.json(reviews);
-});
+//Reviews Route
+app.get('/reviews', reviewsController.getAllReviews)
+app.get("/reviews/sort", reviewsController.getSortedReviewsByScore);
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);

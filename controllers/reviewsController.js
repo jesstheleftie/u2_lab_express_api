@@ -17,7 +17,17 @@ const getSortedReviewsByScore = async (req, res) => {
     res.send("Error Fetching Sorted Reviews");
   }
 };
+const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find();
+    res.json(reviews);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 
 module.exports = {
   getSortedReviewsByScore,
+  getAllReviews
 };
